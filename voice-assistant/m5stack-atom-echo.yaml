@@ -1,7 +1,7 @@
 # with the device facing label-up, and the Grove+USB C ports facing towards you, Available pis are:
 # G21, G25 - on the right - first and second pin from the top
 # G26, G32 - at the bottom - third and fourth pin from the left
-# Please note: non of the above pins can drive 5 V; they are (as are all ESP32 GPIO pins) 3.3 V only.
+# Please note: none of the above pins can drive 5 V; they are (as are all ESP32 GPIO pins) 3.3 V only.
 
 substitutions:
   name: "m5stack-atom-echo"
