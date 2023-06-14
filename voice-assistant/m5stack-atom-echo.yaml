@@ -25,6 +25,9 @@ logger:
 api:
 ota:
 
+web_server:
+  port: 80
+
 dashboard_import:
   package_import_url: github://esphome/firmware/voice-assistant/m5stack-atom-echo.yaml@main
 
