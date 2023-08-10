@@ -1,8 +1,3 @@
-# with the device facing label-up, and the Grove+USB C ports facing towards you, Available pis are:
-# G21, G25 - on the right - first and second pin from the top
-# G26, G32 - at the bottom - third and fourth pin from the left
-# Please note: none of the above pins can drive 5 V; they are (as are all ESP32 GPIO pins) 3.3 V only.
-
 substitutions:
   name: "m5stack-atom-echo"
   friendly_name: "M5Stack Atom Echo"
@@ -14,7 +9,7 @@ esphome:
   project:
     name: m5stack.atom-echo-voice-assistant
     version: "1.0"
-  min_version: 2023.5.0
+  min_version: 2023.7.0
 
 esp32:
   board: m5stack-atom
@@ -54,19 +49,29 @@ speaker:
 voice_assistant:
   microphone: echo_microphone
   speaker: echo_speaker
+  silence_detection: true
+  on_listening:
+    - light.turn_on:
+        id: led
+        blue: 100%
+        red: 0%
+        green: 0%
+        brightness: 50%
   on_start:
     - light.turn_on:
         id: led
         blue: 100%
         red: 0%
         green: 0%
-        effect: none
+        brightness: 100%
+        effect: pulse
   on_tts_start:
     - light.turn_on:
         id: led
         blue: 0%
         red: 0%
         green: 100%
+        brightness: 100%
         effect: none
   on_tts_end:
     - light.turn_on:
@@ -74,9 +79,10 @@ voice_assistant:
         blue: 0%
         red: 0%
         green: 100%
+        brightness: 100%
         effect: pulse
   on_end:
-    - delay: 1s
+    - delay: 100ms
     - wait_until:
         not:
           speaker.is_playing:
@@ -87,6 +93,7 @@ voice_assistant:
         blue: 0%
         red: 100%
         green: 0%
+        brightness: 100%
         effect: none
     - delay: 1s
     - light.turn_off: led
@@ -101,47 +108,22 @@ binary_sensor:
     disabled_by_default: true
     entity_category: diagnostic
     id: echo_button
-    on_multi_click:
-      - timing:
-          - ON FOR AT LEAST 350ms
-        then:
-          - voice_assistant.start:
-      - timing:
-          - ON FOR AT LEAST 350ms
-          - OFF FOR AT LEAST 10ms
-        then:
-          - light.turn_on:
-              id: led
-              blue: 100%
-              red: 0%
-              green: 0%
-              effect: pulse
-          - voice_assistant.stop:
-         #Theoretically this should allow for a button off pin 25.
-  - platform: gpio
-    pin:
-      number: GPIO25
-      inverted: true
-    name: Button
-    disabled_by_default: true
-    entity_category: diagnostic
-    id: echo_button
-    on_multi_click:
-      - timing:
-          - ON FOR AT LEAST 350ms
-        then:
-          - voice_assistant.start:
-      - timing:
-          - ON FOR AT LEAST 350ms
-          - OFF FOR AT LEAST 10ms
-        then:
-          - light.turn_on:
-              id: led
-              blue: 100%
-              red: 0%
-              green: 0%
-              effect: pulse
-          - voice_assistant.stop:
+    on_click:
+      - if:
+          condition: voice_assistant.is_running
+          then:
+            - light.turn_off: led
+            - voice_assistant.stop:
+          else:
+            - light.turn_on:
+                id: led
+                blue: 100%
+                red: 0%
+                green: 0%
+                brightness: 50%
+                effect: none
+            - voice_assistant.start:
+
 light:
   - platform: esp32_rmt_led_strip
     id: led
