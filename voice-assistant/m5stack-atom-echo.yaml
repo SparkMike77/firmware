@@ -49,7 +49,6 @@ speaker:
 i2c:
   sda: 26
   scl: 32
-  scan: True
   id: bus_a
 
 voice_assistant:
@@ -145,8 +144,9 @@ light:
     effects:
       - pulse:
           transition_length: 250ms
-          update_interval: 250ms
-	display:
+          update_interval: 250m
+	  
+display:
   - platform: ssd1306_i2c
     model: "SSD1306 64x48"
     reset_pin: D0
