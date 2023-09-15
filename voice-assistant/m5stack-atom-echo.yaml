@@ -154,9 +154,10 @@ font:
 
 display:
   - platform: ssd1306_i2c
-    model: "SSD1306 64x48"
+    model: "SSD1306 128x32"
     address: 0x3C
     i2c_id: bus_a
+    update_interval: 250ms
     pages:
       
       - id: page1
