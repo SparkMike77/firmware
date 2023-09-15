@@ -46,6 +46,12 @@ speaker:
     dac_type: external
     mode: mono
 
+i2c:
+  sda: 26
+  scl: 32
+  scan: True
+  id: bus_a
+
 voice_assistant:
   microphone: echo_microphone
   speaker: echo_speaker
@@ -140,3 +146,11 @@ light:
       - pulse:
           transition_length: 250ms
           update_interval: 250ms
+	display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 64x48"
+    reset_pin: D0
+    address: 0x3C
+    i2c_id: bus_a
+	lambda: |-
+      it.print(0, 0, id(font), "Hello World!");
