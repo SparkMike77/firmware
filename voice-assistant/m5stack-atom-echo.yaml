@@ -161,3 +161,5 @@ display:
       - id: page1
         lambda: |-
           it.print(0,0,id(font_small), "Hello World");
+          it.print(20,0,id(font_small), "Hello World");
+          it.print(30,0,id(font_small), "Hello World");
