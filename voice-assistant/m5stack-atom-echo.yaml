@@ -10,6 +10,9 @@ esphome:
     name: m5stack.atom-echo-voice-assistant
     version: "1.0"
   min_version: 2023.7.0
+  on_boot:
+    then:
+      - logger.log: "Hello World"
 
 esp32:
   board: m5stack-atom
