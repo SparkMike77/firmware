@@ -144,13 +144,20 @@ light:
     effects:
       - pulse:
           transition_length: 250ms
-          update_interval: 250m
-	  
+          update_interval: 250ms
+
+font:
+  - file: 'fonts/times-new-roman.ttf'
+    id: font_small
+    size: 10
+
 display:
   - platform: ssd1306_i2c
     model: "SSD1306 64x48"
-    reset_pin: D0
     address: 0x3C
     i2c_id: bus_a
-	lambda: |-
-      it.print(0, 0, id(font), "Hello World!");
+    pages:
+      
+      - id: page1
+        lambda: |-
+          it.print(0,0,id(font_small), "Hello World");
