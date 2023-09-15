@@ -47,9 +47,10 @@ speaker:
     mode: mono
 
 i2c:
-  sda: 26
-  scl: 32
+  sda: GPIO26
+  scl: GPIO32
   id: bus_a
+  scan: true
 
 voice_assistant:
   microphone: echo_microphone
